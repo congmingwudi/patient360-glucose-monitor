@@ -1,0 +1,6 @@
+node_modules/
+.env
+*.log
+.claude/
+.sfdx/
+.DS_Store

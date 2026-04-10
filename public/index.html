@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Glucose Monitor</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="header-icon">⬡</div>
+      <h1>Glucose Monitor</h1>
+      <p class="subtitle">Continuous Blood Glucose Simulator</p>
+    </header>
+
+    <main>
+      <!-- Patient ID -->
+      <div class="card patient-card">
+        <label for="patientId">Patient ID</label>
+        <input type="text" id="patientId" placeholder="PATIENT-001" autocomplete="off" />
+      </div>
+
+      <!-- Gauge + Slider -->
+      <div class="card gauge-card">
+        <div class="gauge-container">
+          <canvas id="gaugeCanvas" width="320" height="200"></canvas>
+          <div class="gauge-center">
+            <span id="readingValue">120</span>
+            <span class="unit">mg/dL</span>
+          </div>
+        </div>
+
+        <div class="level-badge" id="levelBadge">Normal</div>
+
+        <div class="slider-wrap">
+          <div class="slider-track">
+            <div class="range-segment dangerously-low"  title="Dangerously Low (&lt;54)"></div>
+            <div class="range-segment low"              title="Low (54–69)"></div>
+            <div class="range-segment normal"           title="Normal (70–180)"></div>
+            <div class="range-segment high"             title="High (181–250)"></div>
+            <div class="range-segment dangerously-high" title="Dangerously High (&gt;250)"></div>
+          </div>
+          <input type="range" id="glucoseSlider"
+                 min="20" max="400" step="1" value="120" />
+        </div>
+
+        <div class="range-labels">
+          <span>20</span>
+          <span>54</span>
+          <span>70</span>
+          <span>180</span>
+          <span>250</span>
+          <span>400</span>
+        </div>
+
+        <div class="legend">
+          <span class="dot dangerously-low"></span>Danger Low
+          <span class="dot low"></span>Low
+          <span class="dot normal"></span>Normal
+          <span class="dot high"></span>High
+          <span class="dot dangerously-high"></span>Danger High
+        </div>
+      </div>
+
+      <!-- Send button -->
+      <button id="sendBtn" class="send-btn">
+        <span class="btn-icon">↑</span>
+        Send Glucose Level
+      </button>
+
+      <!-- Status / response -->
+      <div id="status" class="status hidden"></div>
+
+      <!-- Last sent summary -->
+      <div id="lastSent" class="card last-sent hidden">
+        <h3>Last Transmitted Reading</h3>
+        <table id="lastSentTable"></table>
+      </div>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,85 @@
+openapi: 3.0.3
+info:
+  title: 'GlucoseMonitorEvent Object Endpoints'
+  description: 'GlucoseMonitorEvent Object Endpoints'
+  version: 1.0.0
+servers:
+  -
+    url: 'https://gyydmzrrgmydmyjsgjst8mdfm8.c360a.salesforce.com/api/v1/ingest/sources/GlucoseMonitorEvent'
+paths:
+  /GlucoseMonitorEvent:
+    post:
+      summary: 'Upsert GlucoseMonitorEvent records'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                data: {type: array, items: {$ref: '#/components/schemas/GlucoseMonitorEvent'}}
+      responses:
+        '202':
+          description: Accepted
+        '204':
+          description: 'No Content'
+        '400':
+          description: 'Bad Request'
+        '401':
+          description: Unauthorized
+        '404':
+          description: 'Not Found'
+        '500':
+          description: 'Internal Server Error'
+    delete:
+      summary: 'Delete GlucoseMonitorEvent records'
+      parameters:
+        -
+          in: query
+          name: ids
+          schema:
+            type: array
+            items:
+              oneOf:
+                - {type: string}
+                - {type: integer}
+            minItems: 1
+            maxItems: 200
+          examples:
+            integerIds:
+              value:
+                - 1
+                - 2
+                - 3
+              summary: 'Array of integer Ids'
+          required: true
+          style: form
+          explode: false
+          description: 'Id of GlucoseMonitorEvent'
+      responses:
+        '202':
+          description: Accepted
+        '400':
+          description: 'Bad Request'
+        '401':
+          description: Unauthorized
+        '404':
+          description: 'Not Found'
+        '500':
+          description: 'Internal Server Error'
+components:
+  schemas:
+    GlucoseMonitorEvent:
+      type: object
+      properties:
+        bloodSugarReading:
+          type: number
+        dateTimeStamp:
+          type: string
+          format: date-time
+        patientId:
+          type: string
+        level:
+          type: string
+        eventId:
+          type: string
