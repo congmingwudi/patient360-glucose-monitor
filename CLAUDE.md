@@ -35,7 +35,11 @@ This is a single-page glucose monitoring simulator that sends readings to **Sale
 - `GET /api/config` — returns `DEFAULT_PATIENT_ID` from env
 - `POST /api/glucose` — validates input, obtains token, sends to Salesforce
 
-**Event schema** is defined in `GlucoseMonitorEvent.yaml` (OpenAPI 3.0.3). Fields: `eventId` (UUID), `patientId`, `dateTimeStamp` (ISO 8601 UTC), `bloodSugarReading` (mg/dL), `level` (enum: Dangerously Low / Low / Normal / High / Dangerously High).
+**Event schema** lives in `data360-ingestion-api-schema/`:
+- `GlucoseMonitorEvent.yaml` — hand-authored OpenAPI 3.0.3 definition used to define the Salesforce Data Cloud object. Fields: `eventId` (UUID), `patientId`, `dateTimeStamp` (ISO 8601 UTC), `bloodSugarReading` (mg/dL), `level` (enum: Dangerously Low / Low / Normal / High / Dangerously High).
+- `glucosemonitorevent_object_endpoints_*.yaml` — auto-generated from Data Cloud after the source/object is created; documents the live `POST /GlucoseMonitorEvent` and `DELETE /GlucoseMonitorEvent` endpoints. Treat as read-only reference; do not edit.
+
+**Other top-level dirs:** `public/` (frontend assets, served as static), `images/` (UI screenshot + architecture diagram used by README — not referenced from runtime code).
 
 ## Environment Variables
 
