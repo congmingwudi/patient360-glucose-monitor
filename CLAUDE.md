@@ -18,7 +18,7 @@ No test suite exists in this project.
 
 ## Architecture
 
-This is a single-page glucose monitoring simulator that sends readings to **Salesforce Data Cloud** via their Ingestion API.
+This is a single-page glucose monitoring simulator that sends readings to **Salesforce Data Cloud** via their Ingestion API. It's part of the Patient 360 / TDX26 demo: events flow into a streaming Data Lake Object → Real-Time Data Graph → Agentforce Care Agent (powered by Claude via the Salesforce Trust Layer / LLM Gateway), which can post Slack alerts, schedule appointments, or update the EHR.
 
 **Stack:** Node.js/Express backend + vanilla JS frontend (no build step). Static files served from `public/`.
 
@@ -36,7 +36,7 @@ This is a single-page glucose monitoring simulator that sends readings to **Sale
 - `POST /api/glucose` — validates input, obtains token, sends to Salesforce
 
 **Event schema** lives in `data360-ingestion-api-schema/`:
-- `GlucoseMonitorEvent.yaml` — hand-authored OpenAPI 3.0.3 definition used to define the Salesforce Data Cloud object. Fields: `eventId` (UUID), `patientId`, `dateTimeStamp` (ISO 8601 UTC), `bloodSugarReading` (mg/dL), `level` (enum: Dangerously Low / Low / Normal / High / Dangerously High).
+- `GlucoseMonitorEvent.yaml` — hand-authored OpenAPI 3.0.3 definition used to define the Salesforce Data Cloud object. Fields: `eventId` (UUID, **Data Cloud dedup key**), `patientId`, `dateTimeStamp` (ISO 8601 UTC), `bloodSugarReading` (mg/dL), `level` (enum: Dangerously Low / Low / Normal / High / Dangerously High).
 - `glucosemonitorevent_object_endpoints_*.yaml` — auto-generated from Data Cloud after the source/object is created; documents the live `POST /GlucoseMonitorEvent` and `DELETE /GlucoseMonitorEvent` endpoints. Treat as read-only reference; do not edit.
 
 **Other top-level dirs:** `public/` (frontend assets, served as static), `images/` (UI screenshot + architecture diagram used by README — not referenced from runtime code).
